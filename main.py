@@ -26,8 +26,7 @@ class CivicSphereLayout(BoxLayout):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(Label(text="Welcome to CivicSphere!"))
-
+        # UI components
         self.email_input = TextInput(hint_text="Enter email", multiline=False)
         self.add_widget(self.email_input)
 
@@ -42,21 +41,14 @@ class CivicSphereLayout(BoxLayout):
         self.sign_in_button.bind(on_press=self.sign_in)
         self.add_widget(self.sign_in_button)
 
-def sign_up(self, instance):
-    email = self.email_input.text
-    password = self.password_input.text
-    try:
-        user = auth.create_user_with_email_and_password(email, password)
-        self.show_popup("Success", "User created successfully!")
-    except Exception as e:
-        error_message = str(e)
-        if "EMAIL_EXISTS" in error_message:
-            self.show_popup("Error", "The email address is already in use.")
-        elif "WEAK_PASSWORD" in error_message:
-            self.show_popup("Error", "The password is too weak.")
-        else:
-            self.show_popup("Error", error_message)
-
+    def sign_up(self, instance):
+        email = self.email_input.text
+        password = self.password_input.text
+        try:
+            user = auth.create_user_with_email_and_password(email, password)
+            self.show_popup("Success", "User created successfully!")
+        except Exception as e:
+            self.show_popup("Error", str(e))
 
     def sign_in(self, instance):
         email = self.email_input.text
@@ -66,7 +58,6 @@ def sign_up(self, instance):
             self.show_popup("Success", "Signed in successfully!")
         except Exception as e:
             self.show_popup("Error", str(e))
-
 
     def show_popup(self, title, message):
         popup_layout = BoxLayout(orientation='vertical')
